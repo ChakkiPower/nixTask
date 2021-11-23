@@ -22,18 +22,13 @@ const basketReducer = (
         (item) => item.id === action.payload.id,
       );
       if (isAlreadyExists) {
-        const newItems = state.items.map((item) => {
-          if (item.id === action.payload.id) {
-            return {
-              ...item,
-              quantity: item.quantity + 1,
-            };
-          }
-          return item;
-        });
         return {
           ...state,
-          items: newItems,
+          items: state.items.map((item) =>
+            item.id === action.payload.id
+              ? {...item, quantity: item.quantity + 1}
+              : item,
+          ),
         };
       } else {
         return {
@@ -42,42 +37,36 @@ const basketReducer = (
         };
       }
     case REMOVE_BASKET_ITEM:
-      const filteredItems = state.items.filter(
-        (item) => item.id !== action.payload.id,
-      );
       return {
         ...state,
-        items: filteredItems,
+        items: state.items.filter((item) => item.id !== action.payload.id),
       };
     case UPDATE_ITEM_QUANTITY:
-      const updatedItems = state.items.map((item) =>
-        item.id === action.payload.id
-          ? {...item, quantity: action.payload.quantity}
-          : item,
-      );
       return {
         ...state,
-        items: updatedItems,
+        items: state.items.map((item) =>
+          item.id === action.payload.id
+            ? {...item, quantity: action.payload.quantity}
+            : item,
+        ),
       };
     case INCREMENT_QUANTITY:
-      const incrementedItems = state.items.map((item) =>
-        item.id === action.payload
-          ? {...item, quantity: item.quantity + 1}
-          : item,
-      );
       return {
         ...state,
-        items: incrementedItems,
+        items: state.items.map((item) =>
+          item.id === action.payload
+            ? {...item, quantity: item.quantity + 1}
+            : item,
+        ),
       };
     case DECREMENT_QUANTITY:
-      const decrementedItems = state.items.map((item) =>
-        item.id === action.payload
-          ? {...item, quantity: item.quantity - 1}
-          : item,
-      );
       return {
         ...state,
-        items: decrementedItems,
+        items: state.items.map((item) =>
+          item.id === action.payload
+            ? {...item, quantity: item.quantity - 1}
+            : item,
+        ),
       };
     default:
       return state;
