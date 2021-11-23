@@ -7,6 +7,8 @@ import {getProducts} from '../../store/actions/productsActions';
 
 import ProductListComponent from '../../components/ProductListComponent';
 
+import styles from './styles';
+
 const MainScreen: React.FC = () => {
   const products = useSelector((state: AppState) => state.products.products);
   const isLoading = useSelector((state: AppState) => state.products.isLoading);
@@ -23,9 +25,11 @@ const MainScreen: React.FC = () => {
   }
 
   if (errors) {
-    <View>
-      <Text>{errors}</Text>
-    </View>;
+    return (
+      <View style={styles.container}>
+        <Text>{errors}</Text>
+      </View>
+    );
   }
 
   return <ProductListComponent data={products} />;

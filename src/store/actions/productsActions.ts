@@ -16,6 +16,7 @@ export const getProducts = () => {
         dispatch(productsLoadingSuccess(res.data));
       })
       .catch((err) => {
+        console.log('ERROR', err.message);
         dispatch(productsLoadingFailure(err.message));
       });
   };
